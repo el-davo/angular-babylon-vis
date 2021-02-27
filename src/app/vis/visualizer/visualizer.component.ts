@@ -14,7 +14,7 @@ export class VisualizerComponent implements AfterViewInit {
   @ViewChild('container') container: any;
   @ViewChild('rendererContainer') rendererContainer: any;
 
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({antialias: true});
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1);
   loader = new GLTFLoader();
@@ -22,6 +22,8 @@ export class VisualizerComponent implements AfterViewInit {
   constructor(private visService: VisService) {
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 500);
     this.camera.position.z = 1000;
+    this.scene.add(new THREE.AmbientLight(0x916262));
+    this.scene.add(new THREE.HemisphereLight(0xffffbb, 0x080820, 1));
   }
 
   ngAfterViewInit(): void {
@@ -35,8 +37,6 @@ export class VisualizerComponent implements AfterViewInit {
     this.loader.load('assets/models/powerstore.glb', (gltf) => {
       this.scene.add(gltf.scene);
       this.visService.fitCameraToObject(this.camera, gltf.scene);
-    }, undefined, (error) => {
-      console.error(error);
     });
 
     this.animate();
