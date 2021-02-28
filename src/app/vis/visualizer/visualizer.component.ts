@@ -24,14 +24,13 @@ export class VisualizerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(this.container.nativeElement.offsetWidth, this.container.nativeElement.offsetHeight);
     this.renderer.setClearColor(0xffffff);
     this.scene.add(new AmbientLight(0x916262, 0.5));
     this.scene.add(new HemisphereLight(0xffffbb, 0x080820, 1));
+    new OrbitControls(this.camera, this.renderer.domElement);
 
     this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
-    this.renderer.setSize(this.container.nativeElement.offsetWidth, this.container.nativeElement.offsetHeight);
-    new OrbitControls(this.camera, this.renderer.domElement);
 
     this.store.dispatch(actions.loadAsset({url: 'assets/models/powerstore.glb', lookAt: true}));
 
