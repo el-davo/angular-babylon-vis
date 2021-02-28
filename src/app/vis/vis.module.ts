@@ -38,7 +38,7 @@ const routes: Routes = [
     },
     {
       provide: PerspectiveCamera,
-      useValue: new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 500)
+      useValue: new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 500)
     }
   ]
 })
